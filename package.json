@@ -1,0 +1,19 @@
+{
+  "name": "ilp-spsp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "ilp-spsp": "./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ilp-plugin": "^3.0.0",
+    "ilp-protocol-spsp": "^1.0.1",
+    "yargs": "^11.0.0"
+  }
+}
