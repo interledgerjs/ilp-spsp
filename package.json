@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "ilp-plugin": "^3.0.0",
+    "ilp-protocol-psk2": "^0.2.1",
     "ilp-protocol-spsp": "^2.0.0",
     "yargs": "^11.0.0"
   }
