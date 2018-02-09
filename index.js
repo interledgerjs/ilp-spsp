@@ -52,7 +52,7 @@ require('yargs')
       debug('paying invoice')
       await PSK2.sendDestinationAmount(plugin, {
         ...query,
-        destinationAmount: query.balance.maximum
+        destinationAmount: String(query.balance.maximum - query.balance.current)
       })
 
       console.log('paid!')
