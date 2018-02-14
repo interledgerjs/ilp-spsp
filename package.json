@@ -14,7 +14,7 @@
   "dependencies": {
     "ilp-plugin": "^3.0.0",
     "ilp-protocol-psk2": "^0.2.1",
-    "ilp-protocol-spsp": "^2.0.0",
+    "ilp-protocol-spsp": "github:sharafian/ilp-protocol-spsp#bs-paystream",
     "yargs": "^11.0.0"
   }
 }
