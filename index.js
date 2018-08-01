@@ -49,6 +49,11 @@ require('yargs')
         process.exit(1)
       }
 
+      if (query.contentType.indexOf('application/spsp+json') === -1) {
+        console.error('use the \'send\' command to fill an invoice on SPSPv4.')
+        process.exit(1)
+      }
+
       debug('paying invoice')
       await PSK2.sendDestinationAmount(plugin, {
         ...query,
