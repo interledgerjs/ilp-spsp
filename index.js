@@ -74,7 +74,7 @@ require('yargs')
       await plugin.connect()
       debug('pulling payment')
       await SPSP.pull(plugin, {
-        subscription: argv.pointer
+        pointer: argv.pointer
       })
     } catch (e) {
       console.error(e)
