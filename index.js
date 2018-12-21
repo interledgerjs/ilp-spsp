@@ -67,6 +67,21 @@ require('yargs')
       process.exit(1)
     }
   })
+  .command('pull', 'pull money via SPSP', {}, async argv => {
+    console.log(`pulling from "${argv.receiver}"...`)
+    try {
+      debug('connecting plugin')
+      await plugin.connect()
+      debug('pulling payment')
+      await SPSP.pull(plugin, {
+        subscription: argv.receiver
+      })
+    } catch (e) {
+      console.error(e)
+      process.exit(1)
+    }
+    process.exit(0)
+  })
   .command('query', 'query SPSP endpoint', {}, async argv => {
     const response = await SPSP.query(argv.receiver)
     response.sharedSecret = response.sharedSecret.toString('base64')
