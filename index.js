@@ -5,25 +5,25 @@ const PSK2 = require('ilp-protocol-psk2')
 const debug = require('debug')('ilp-spsp')
 
 require('yargs')
-  .option('receiver', {
-    alias: 'r',
-    description: 'payment pointer of SPSP receiver'
+  .option('pointer', {
+    alias: 'p',
+    description: 'SPSP payment pointer'
   })
   .command('send', 'send money via SPSP', {
     amount: {
       alias: 'a',
       required: true,
-      description: 'amount to send to receiver (source account base units)'
+      description: 'amount to send to payment pointer (source account base units)'
     }
   }, async argv => {
-    console.log(`paying ${argv.amount} to "${argv.receiver}"...`)
+    console.log(`paying ${argv.amount} to "${argv.pointer}"...`)
 
     try {
       debug('connecting plugin')
       await plugin.connect()
       debug('sending payment')
       await SPSP.pay(plugin, {
-        receiver: argv.receiver,
+        pointer: argv.pointer,
         sourceAmount: argv.amount
       })
     } catch (e) {
@@ -35,14 +35,14 @@ require('yargs')
     process.exit(0)
   })
   .command('invoice', 'pay an SPSP invoice', {}, async argv => {
-    console.log(`paying invoice at "${argv.receiver}"...`)
+    console.log(`paying invoice at "${argv.pointer}"...`)
 
     try {
       debug('connecting plugin')
       await plugin.connect()
 
-      debug('querying SPSP receiver')
-      const query = await SPSP.query(argv.receiver)
+      debug('querying SPSP payment pointer')
+      const query = await SPSP.query(argv.pointer)
 
       if (!query.balance) {
         console.error('query result has no balance')
@@ -68,13 +68,13 @@ require('yargs')
     }
   })
   .command('pull', 'pull money via SPSP', {}, async argv => {
-    console.log(`pulling from "${argv.receiver}"...`)
+    console.log(`pulling from "${argv.pointer}"...`)
     try {
       debug('connecting plugin')
       await plugin.connect()
       debug('pulling payment')
       await SPSP.pull(plugin, {
-        subscription: argv.receiver
+        subscription: argv.pointer
       })
     } catch (e) {
       console.error(e)
@@ -83,7 +83,7 @@ require('yargs')
     process.exit(0)
   })
   .command('query', 'query SPSP endpoint', {}, async argv => {
-    const response = await SPSP.query(argv.receiver)
+    const response = await SPSP.query(argv.pointer)
     response.sharedSecret = response.sharedSecret.toString('base64')
     console.log(JSON.stringify(response, null, 2))
     process.exit(0)
