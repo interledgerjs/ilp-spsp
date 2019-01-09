@@ -19,9 +19,10 @@ ilp-spsp --help
 #   ilp-spsp query    query SPSP endpoint
 
 # Options:
-#   --help         Show help                                             [boolean]
-#   --version      Show version number                                   [boolean]
-#   --pointer, -p  SPSP payment pointer
+#   --help                         Show help                                             [boolean]
+#   --version                      Show version number                                   [boolean]
+#   --pointer, --receiver, -p, -r  SPSP payment pointer
+
 
 ilp-spsp query --pointer '$mysubdomain.localtunnel.me'
 # --> 
