@@ -6,7 +6,7 @@ const debug = require('debug')('ilp-spsp')
 
 require('yargs')
   .option('pointer', {
-    alias: 'p',
+    alias: ['receiver', 'p', 'r'],
     description: 'SPSP payment pointer'
   })
   .command('send', 'send money via SPSP', {
