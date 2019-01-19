@@ -74,7 +74,10 @@ require('yargs')
       await plugin.connect()
       debug('pulling payment')
       await SPSP.pull(plugin, {
-        pointer: argv.pointer
+        pointer: argv.pointer,
+        callback: function (amount) {
+          console.log('pulled ' + amount + ' units!')
+        }
       })
     } catch (e) {
       console.error(e)
