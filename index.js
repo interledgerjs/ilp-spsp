@@ -67,7 +67,13 @@ require('yargs')
       process.exit(1)
     }
   })
-  .command('pull', 'pull money via SPSP', {}, async argv => {
+  .command('pull', 'pull money via SPSP', {
+    amount: {
+      alias: 'a',
+      required: false,
+      description: 'amount to pull from payment pointer (source account base units)'
+    }
+  }, async argv => {
     console.log(`pulling from "${argv.pointer}"...`)
     try {
       debug('connecting plugin')
@@ -75,8 +81,9 @@ require('yargs')
       debug('pulling payment')
       await SPSP.pull(plugin, {
         pointer: argv.pointer,
-        callback: function (amount) {
-          console.log('pulled ' + amount + ' units!')
+        amount: argv.amount,
+        callback: function (pulledAmount) {
+          console.log('pulled ' + pulledAmount + ' units!')
         }
       })
     } catch (e) {
