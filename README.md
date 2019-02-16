@@ -8,6 +8,7 @@ Make sure you're running a local ILP provider. If you don't have one, take a loo
 ```sh
 npm install -g ilp-spsp
 # payment pointers use the '$' so must be escaped in bash
+
 ilp-spsp --help
 # --> 
 # ilp-spsp [command]
@@ -23,49 +24,20 @@ ilp-spsp --help
 #   --version                      Show version number                                   [boolean]
 #   --pointer, --receiver, -p, -r  SPSP payment pointer
 
-
 ilp-spsp query --pointer '$mysubdomain.localtunnel.me'
 # --> 
 # {
-#   "destinationAccount": "g.siren.out.XOj2Y_doFnoFDZTp0sKKvUOfw7XFpW9OyWyz7gkxQhE.FOiDpSe0xmo.UpGrSQGr7TvDmnLUoEez0Gzg",
+#   "destinationAccount": "private.moneyd.local.DMMyURutr6hUmF-Go0ch3SAnsvrKKnmqG6oWwtEDjTA.cFKMLZPFaXJCL_pqqjLtLWPE~ccf42f59-5692-4a8b-8fde-4896c7601035",
 #   "sharedSecret": "qtUsvKOjVX9b6WIZT5KVTJhXnkej0P5kH6vAoRm9atU=",
-#   "ledgerInfo": {
-#     "asset_code": "XRP",
-#     "asset_scale": 6
-#   },
-#   "receiverInfo": {
-#     "name": "Test Person"
-#   }
-# }
-
-ilp-spsp query --pointer '$mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7aeca03f17c7'
-# --> 
-# {
-#   "destinationAccount": "private.moneyd.local.PacgxNqHIKTlZGM3aB_2YrXQydNPASI_j8LyE4BFmnc.uNiOoTJbbJrcqb2aHO9Kh51W~f8095a44-c77f-4414-a19d-7aeca03f17c7",
-#   "sharedSecret": "b88NPGVk5nubgM6zpnI/tVjRdgpUh+JvMueRFEMvPcY=",
-#   "balance": {
-#     "amount": "100",
-#     "current": "100",
-#     "maximum": "10000"
-#   },
-#   "receiverInfo": {
-#     "name": "Amazon",
-#     "interval": "7",
-#     "cooldown": "1546037535"
-#   },
-#   "contentType": "application/spsp4+json"
-# }
 
 ilp-spsp send --pointer '$mysubdomain.localtunnel.me' --amount 1000
 # --> 
 # paying 100 to "$mysubdomain.localtunnel.me"...
 # sent!
 
-ilp-spsp pull --pointer '$mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7aeca03f17c7'
+ilp-spsp pull --pointer '$mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7aeca03f17c7' -- amount 100
 # --> 
-# Pulled packet for 100 units from $mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7aeca03f17c7  //amount depends on the specification in the pull payment pointer
-# or --> 
-# Cooldown period is not over.
-# or --> 
-# Maximum pull amount is reached.
+# pulled 100 units! 
 ```
+
+The amount in the pull command is optional. If it is not provided, the maximum possible amount will be pulled, depending on the pull payment agreement. 
