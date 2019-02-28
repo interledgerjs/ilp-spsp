@@ -32,10 +32,10 @@ ilp-spsp query --pointer '$mysubdomain.localtunnel.me'
 
 ilp-spsp send --pointer '$mysubdomain.localtunnel.me' --amount 1000
 # --> 
-# paying 100 to "$mysubdomain.localtunnel.me"...
+# paying 1000 to "$mysubdomain.localtunnel.me"...
 # sent!
 
-ilp-spsp pull --pointer '$mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7aeca03f17c7' -- amount 100
+ilp-spsp pull --pointer '$mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7aeca03f17c7' --amount 100
 # --> 
 # pulled 100 units! 
 ```
