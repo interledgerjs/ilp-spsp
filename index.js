@@ -70,8 +70,8 @@ require('yargs')
   .command('pull', 'pull money via SPSP', {
     amount: {
       alias: 'a',
-      required: false,
-      description: 'amount to pull from payment pointer (source account base units)'
+      required: true,
+      description: 'amount to pull from payment pointer (receiving account base units)'
     }
   }, async argv => {
     console.log(`pulling from "${argv.pointer}"...`)

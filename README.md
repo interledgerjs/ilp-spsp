@@ -39,5 +39,3 @@ ilp-spsp pull --pointer '$mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7ae
 # --> 
 # pulled 100 units! 
 ```
-
-The amount in the pull command is optional. If it is not provided, the maximum possible amount will be pulled, depending on the pull payment agreement. 
