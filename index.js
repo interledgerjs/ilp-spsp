@@ -79,13 +79,16 @@ require('yargs')
       debug('connecting plugin')
       await plugin.connect()
       debug('pulling payment')
-      await SPSP.pull(plugin, {
-        pointer: argv.pointer,
-        amount: argv.amount,
-        callback: function (pulledAmount) {
-          console.log('pulled ' + pulledAmount + ' units!')
-        }
-      })
+      try {
+        const pulledAmount = await SPSP.pull(plugin, {
+          pointer: argv.pointer,
+          amount: argv.amount,
+          streamOpts: { timeout: 10000 }
+        }).totalReceived
+        console.log('pulled ' + pulledAmount + ' units!')
+      } catch (e) {
+        console.log('pulled ' + (e instanceof SPSP.SPSPPaymentError ? e.totalReceived : '0') + ' units!')
+      }
     } catch (e) {
       console.error(e)
       process.exit(1)
