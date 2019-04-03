@@ -90,10 +90,10 @@ require('yargs')
           pointer: argv.pointer,
           amount: argv.amount,
           streamOpts: { timeout: 10000 }
-        }).totalReceived
-        console.log('pulled ' + pulledAmount + ' units!')
+        })
+        console.log('pulled ' + pulledAmount.totalReceived + ' units!')
       } catch (e) {
-        console.log('pulled ' + (e instanceof SPSP.SPSPPaymentError ? e.totalReceived : '0') + ' units!')
+        console.log('pulled ' + (e instanceof SPSP.PullError ? e.totalReceived : '0') + ' units!')
       }
     } catch (e) {
       console.error(e)
