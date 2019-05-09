@@ -27,10 +27,10 @@ require('yargs')
           pointer: argv.pointer,
           sourceAmount: argv.amount,
           streamOpts: { timeout: 10000 }
-        }).totalSent
-        console.log('sent ' + pulledAmount + ' units!')
+        })
+        console.log('sent ' + sentAmount.totalSent + ' units!')
       } catch (e) {
-        console.log('sent ' + (e instanceof SPSP.SPSPPaymentError ? e.totalSent : '0') + ' units!')
+        console.log('sent ' + (e instanceof SPSP.PaymentError ? e.totalSent : '0') + ' units!')
       }
     } catch (e) {
       console.error(e)
@@ -93,7 +93,7 @@ require('yargs')
         })
         console.log('pulled ' + pulledAmount.totalReceived + ' units!')
       } catch (e) {
-        console.log('pulled ' + (e instanceof SPSP.PullError ? e.totalReceived : '0') + ' units!')
+        console.log('pulled ' + (e instanceof SPSP.PaymentError ? e.totalReceived : '0') + ' units!')
       }
     } catch (e) {
       console.error(e)
