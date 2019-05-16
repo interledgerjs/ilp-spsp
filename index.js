@@ -37,7 +37,6 @@ require('yargs')
       process.exit(1)
     }
 
-    console.log('sent!')
     process.exit(0)
   })
   .command('invoice', 'pay an SPSP invoice', {}, async argv => {
