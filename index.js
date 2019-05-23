@@ -102,7 +102,6 @@ require('yargs')
   })
   .command('query', 'query SPSP endpoint', {}, async argv => {
     const response = await SPSP.query(argv.pointer)
-    response.sharedSecret = response.sharedSecret.toString('base64')
     console.log(JSON.stringify(response, null, 2))
     process.exit(0)
   })
