@@ -5,44 +5,49 @@ const PSK2 = require('ilp-protocol-psk2')
 const debug = require('debug')('ilp-spsp')
 
 require('yargs')
-  .option('receiver', {
-    alias: 'r',
-    description: 'payment pointer of SPSP receiver'
+  .option('pointer', {
+    alias: ['receiver', 'p', 'r'],
+    description: 'SPSP payment pointer'
   })
   .command('send', 'send money via SPSP', {
     amount: {
       alias: 'a',
       required: true,
-      description: 'amount to send to receiver (source account base units)'
+      description: 'amount to send to payment pointer (source account base units)'
     }
   }, async argv => {
-    console.log(`paying ${argv.amount} to "${argv.receiver}"...`)
+    console.log(`paying ${argv.amount} to "${argv.pointer}"...`)
 
     try {
       debug('connecting plugin')
       await plugin.connect()
       debug('sending payment')
-      await SPSP.pay(plugin, {
-        receiver: argv.receiver,
-        sourceAmount: argv.amount
-      })
+      try {
+        const sentAmount = await SPSP.pay(plugin, {
+          pointer: argv.pointer,
+          sourceAmount: argv.amount,
+          streamOpts: { timeout: 10000 }
+        })
+        console.log('sent ' + sentAmount.totalSent + ' units!')
+      } catch (e) {
+        console.log('sent ' + (e instanceof SPSP.PaymentError ? e.totalSent : '0') + ' units!')
+      }
     } catch (e) {
       console.error(e)
       process.exit(1)
     }
 
-    console.log('sent!')
     process.exit(0)
   })
   .command('invoice', 'pay an SPSP invoice', {}, async argv => {
-    console.log(`paying invoice at "${argv.receiver}"...`)
+    console.log(`paying invoice at "${argv.pointer}"...`)
 
     try {
       debug('connecting plugin')
       await plugin.connect()
 
-      debug('querying SPSP receiver')
-      const query = await SPSP.query(argv.receiver)
+      debug('querying SPSP payment pointer')
+      const query = await SPSP.query(argv.pointer)
 
       if (!query.balance) {
         console.error('query result has no balance')
@@ -67,9 +72,36 @@ require('yargs')
       process.exit(1)
     }
   })
+  .command('pull', 'pull money via SPSP', {
+    amount: {
+      alias: 'a',
+      required: true,
+      description: 'amount to pull from payment pointer (receiving account base units)'
+    }
+  }, async argv => {
+    console.log(`pulling from "${argv.pointer}"...`)
+    try {
+      debug('connecting plugin')
+      await plugin.connect()
+      debug('pulling payment')
+      try {
+        const pulledAmount = await SPSP.pull(plugin, {
+          pointer: argv.pointer,
+          amount: argv.amount,
+          streamOpts: { timeout: 10000 }
+        })
+        console.log('pulled ' + pulledAmount.totalReceived + ' units!')
+      } catch (e) {
+        console.log('pulled ' + (e instanceof SPSP.PaymentError ? e.totalReceived : '0') + ' units!')
+      }
+    } catch (e) {
+      console.error(e)
+      process.exit(1)
+    }
+    process.exit(0)
+  })
   .command('query', 'query SPSP endpoint', {}, async argv => {
-    const response = await SPSP.query(argv.receiver)
-    response.sharedSecret = response.sharedSecret.toString('base64')
+    const response = await SPSP.query(argv.pointer)
     console.log(JSON.stringify(response, null, 2))
     process.exit(0)
   })
