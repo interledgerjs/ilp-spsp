@@ -3,7 +3,9 @@
 
 ## Quick-start
 
-Make sure you're running a local ILP provider. If you don't have one, take a look at [moneyd](https://github.com/sharafian/moneyd) or read the getting started guide on [interledger.org](https://interledger.org).
+
+Make sure you're running a [local ILP provider](https://github.com/interledgerjs/moneyd) or configure [`ILP_BTP_SERVER`](https://github.com/interledgerjs/interledgerjs/tree/master/packages/ilp-plugin#ilp-plugin) when `send`ing.
+Read the getting started guide on [interledger.org](https://interledger.org/setup-wallets.html) for information on setting up a test wallet account.
 
 ```sh
 npm install -g ilp-spsp
@@ -24,15 +26,15 @@ ilp-spsp --help
 #   --version                      Show version number                                   [boolean]
 #   --pointer, --receiver, -p, -r  SPSP payment pointer
 
-ilp-spsp query --pointer '$mysubdomain.localtunnel.me'
+ilp-spsp query --pointer '$rafiki.money/p/your-username'
 # --> 
 # {
-#   "destinationAccount": "private.moneyd.local.DMMyURutr6hUmF-Go0ch3SAnsvrKKnmqG6oWwtEDjTA.cFKMLZPFaXJCL_pqqjLtLWPE~ccf42f59-5692-4a8b-8fde-4896c7601035",
+#   "destinationAccount": "test.rafikius1.mini.GsY5wdYWgOvykG2KMlBZVQqdH57aYcAwNFVJ86PXLmU.local.DMMyURutr6hUmF-Go0ch3SAnsvrKKnmqG6oWwtEDjTA.cFKMLZPFaXJCL_pqqjLtLWPE~ccf42f59-5692-4a8b-8fde-4896c7601035",
 #   "sharedSecret": "qtUsvKOjVX9b6WIZT5KVTJhXnkej0P5kH6vAoRm9atU=",
 
-ilp-spsp send --pointer '$mysubdomain.localtunnel.me' --amount 1000
+ILP_BTP_SERVER=btp+wss://us1.rafikilabs.com/btp ilp-spsp send --pointer '$rafiki.money/p/your-username' --amount 1000
 # --> 
-# paying 1000 to "$mysubdomain.localtunnel.me"...
+# paying 1000 to "$rafiki.money/p/your-username"...
 # sent 1000 units!
 
 ilp-spsp pull --pointer '$mysubdomain.localtunnel.me/f8095a44-c77f-4414-a19d-7aeca03f17c7' --amount 100
