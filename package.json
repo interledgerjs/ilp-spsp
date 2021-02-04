@@ -12,9 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ilp-plugin": "^3.0.0",
+    "ilp-plugin": "^3.5.3",
     "ilp-protocol-psk2": "^0.2.1",
     "ilp-protocol-spsp": "^3.0.0",
-    "yargs": "^11.0.0"
+    "yargs": "^16.2.0"
   }
 }
